@@ -13,7 +13,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-                    android:background="@color/purple_500"
+                    app:titleTextColor="@color/white"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
         </com.google.android.material.appbar.AppBarLayout>
 
