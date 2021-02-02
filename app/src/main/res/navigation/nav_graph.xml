@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/main">
+    <fragment
+        android:name="com.example.whatscooking.HomeFrag"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/main">
+        <action
+            android:id="@+id/main_to_ingredient"
+            app:destination="@id/ingredient_select"/>
+    </fragment>
+    <fragment
+        android:name="com.example.whatscooking.Ingredient"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/ingredient_select">
+        <action
+            android:id="@+id/ingredient_to_main"
+            app:destination="@id/main"/>
+    </fragment>
+
+</navigation>
