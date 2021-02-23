@@ -8,10 +8,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 
+//import com.chaquo.python.Python;
+//import com.chaquo.python.android.AndroidPlatform;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-
+    static int w = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
