@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
@@ -41,12 +42,7 @@ public class HomeFrag extends Fragment {
 
         textview = view.findViewById(R.id.textView);
         button = view.findViewById(R.id.button2);
-        view.findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavHostFragment.findNavController(HomeFrag.this)
-                        .navigate(R.id.main_to_ingredient);
-            }
-        });
+        view.findViewById(R.id.button2).setOnClickListener(v -> NavHostFragment.findNavController(HomeFrag.this)
+                .navigate(R.id.main_to_ingredient));
     }
 }
