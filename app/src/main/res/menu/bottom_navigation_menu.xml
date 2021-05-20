@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home"
+        android:enabled="true"
+        android:icon="@drawable/ic_home"
+        android:title="@string/home" />
+    <item
+        android:id="@+id/inven"
+        android:enabled="true"
+        android:icon="@drawable/ic_inven"
+        android:title="@string/inventory"/>
+    <item
+        android:id="@+id/reci"
+        android:enabled="true"
+        android:icon="@drawable/ic_reci"
+        android:title="@string/recipe"/>
+    <item
+        android:id="@+id/search"
+        android:enabled="true"
+        android:icon="@drawable/ic_search"
+        android:title="@string/search"/>
+</menu>

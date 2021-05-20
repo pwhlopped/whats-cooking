@@ -43,6 +43,6 @@ public class HomeFrag extends Fragment {
         textview = view.findViewById(R.id.textView);
         button = view.findViewById(R.id.button2);
         view.findViewById(R.id.button2).setOnClickListener(v -> NavHostFragment.findNavController(HomeFrag.this)
-                .navigate(R.id.main_to_ingredient));
+                .navigate(R.id.action_home_to_inven));
     }
 }

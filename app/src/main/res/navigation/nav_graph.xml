@@ -3,24 +3,58 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/main">
+    app:startDestination="@id/home">
     <fragment
         android:name="com.example.whatscooking.HomeFrag"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/main">
+        android:id="@+id/home">
         <action
-            android:id="@+id/main_to_ingredient"
-            app:destination="@id/ingredient_select"/>
+            android:id="@+id/action_home_to_inven"
+            app:destination="@id/inven" />
+        <action
+            android:id="@+id/action_home_to_reci"
+            app:destination="@id/reci" />
+        <action
+            android:id="@+id/action_home_to_search"
+            app:destination="@id/search" />
     </fragment>
     <fragment
-        android:name="com.example.whatscooking.Ingredient"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/ingredient_select">
+        android:name="com.example.whatscooking.InventoryFrag"
+        android:id="@+id/inven">
         <action
-            android:id="@+id/ingredient_to_main"
-            app:destination="@id/main"/>
+            android:id="@+id/action_inven_to_reci"
+            app:destination="@id/reci" />
+        <action
+            android:id="@+id/action_inven_to_home"
+            app:destination="@id/home" />
+        <action
+            android:id="@+id/action_inven_to_search"
+            app:destination="@id/search" />
+    </fragment>
+    <fragment
+        android:name="com.example.whatscooking.RecipeFrag"
+        android:id="@+id/reci">
+        <action
+            android:id="@+id/action_reci_to_inven"
+            app:destination="@id/inven" />
+        <action
+            android:id="@+id/action_reci_to_home"
+            app:destination="@id/home" />
+        <action
+            android:id="@+id/action_reci_to_search"
+            app:destination="@id/search" />
+    </fragment>
+    <fragment
+        android:name="com.example.whatscooking.SearchFrag"
+        android:id="@+id/search">
+        <action
+            android:id="@+id/action_search_to_home"
+            app:destination="@id/home" />
+        <action
+            android:id="@+id/action_search_to_inven"
+            app:destination="@id/inven" />
+        <action
+            android:id="@+id/action_search_to_reci"
+            app:destination="@id/reci" />
     </fragment>
 
 </navigation>
