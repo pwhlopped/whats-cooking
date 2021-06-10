@@ -1,13 +1,19 @@
 package com.example.whatscooking;
 
+import android.app.ActionBar;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.Layout;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -24,6 +30,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -46,7 +53,7 @@ public class SearchFrag extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_inventory, container, false);
+        return inflater.inflate(R.layout.fragment_search, container, false);
     }
 
     @Override
@@ -55,17 +62,31 @@ public class SearchFrag extends Fragment {
         searchBar = view.findViewById(R.id.search_bar);
         searchButton = view.findViewById(R.id.search_button);
         scrollView = view.findViewById(R.id.search_scroll_view);
+        searchList = view.findViewById(R.id.search_list);
+        searchButton.setOnClickListener(v -> search(v));
     }
 
     private CardView createCardView(String name){
         // TODO: fill in context and customize card
-        return new CardView(this.getContext());
+        CardView cv = new CardView(this.getContext());
+        cv.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT));
+        TextView tv = new TextView(this.getContext());
+        tv.setText(name);
+        tv.setGravity(Gravity.CENTER);
+        int pad =  (int) getResources().getDimension(R.dimen.inventory_padding);
+        tv.setPadding(pad, pad, pad, pad);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        }
+        tv.setTextSize(20);
+        cv.addView(tv);
+        return cv;
     }
     private void processResponse(JSONObject res){
         ArrayList<String> meal_names = new ArrayList<>();
+        searchList.removeAllViews();
         try{
             JSONArray results = (JSONArray) res.get("meals");
-            // TODO: only fetches one result
             for(int i=0; i<results.length(); i++) {
                 JSONObject recipeItem = (JSONObject) results.get(i);
                 meal_names.add(recipeItem.get("strMeal").toString());
@@ -82,7 +103,8 @@ public class SearchFrag extends Fragment {
     }
 
     private void search(View view){
-        String query = url + this.searchBar.getText().toString();
+        // TODO: When replace API, should abstract this process
+        String query = url + "search.php?s=" + this.searchBar.getText().toString();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, query, null,
                 new Response.Listener<JSONObject>() {
                     @Override

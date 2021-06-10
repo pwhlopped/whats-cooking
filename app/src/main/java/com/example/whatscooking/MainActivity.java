@@ -19,10 +19,6 @@ import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-//import com.chaquo.python.Python;
-//import com.chaquo.python.android.AndroidPlatform;
-
-
 public class MainActivity extends AppCompatActivity{
     private Toolbar toolbar;
     private BottomNavigationView navbar;
