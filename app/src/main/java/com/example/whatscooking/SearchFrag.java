@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -47,7 +48,7 @@ public class SearchFrag extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        q = Volley.newRequestQueue(this.getContext());
+        q = ((MainActivity) getActivity()).q;
     }
 
     @Override
@@ -57,13 +58,13 @@ public class SearchFrag extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState){
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
         searchBar = view.findViewById(R.id.search_bar);
         searchButton = view.findViewById(R.id.search_button);
         scrollView = view.findViewById(R.id.search_scroll_view);
         searchList = view.findViewById(R.id.search_list);
-        searchButton.setOnClickListener(v -> search(v));
+        searchButton.setOnClickListener(this::search);
     }
 
     private CardView createCardView(String name){
@@ -105,7 +106,7 @@ public class SearchFrag extends Fragment {
     private void search(View view){
         // TODO: When replace API, should abstract this process
         String query = url + "search.php?s=" + this.searchBar.getText().toString();
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, query, null,
+        JsonObjectRequest r = new JsonObjectRequest(Request.Method.GET, query, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -115,11 +116,10 @@ public class SearchFrag extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // TODO: make toast
-                        System.out.println("Error");
+                        Toast.makeText(getContext(), "Request Failed", Toast.LENGTH_SHORT).show();
                     }
                 });
-        q.add(jsonObjectRequest);
-        // TODO: make toast
+        q.add(r);
+        Toast.makeText(getContext(), "Request Success", Toast.LENGTH_SHORT).show();
     }
 }

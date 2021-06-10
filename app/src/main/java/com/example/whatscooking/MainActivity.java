@@ -17,12 +17,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity{
     private Toolbar toolbar;
     private BottomNavigationView navbar;
     private NavController navController;
+    public RequestQueue q;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +38,7 @@ public class MainActivity extends AppCompatActivity{
         navController = navHostFragment.getNavController();
         navController.setGraph(R.navigation.nav_graph);
         NavigationUI.setupWithNavController(navbar, navController);
+        q = Volley.newRequestQueue(this.getBaseContext());
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -42,4 +46,5 @@ public class MainActivity extends AppCompatActivity{
         inflater.inflate(R.menu.main_menu, menu);
         return true;
     }
+
 }
