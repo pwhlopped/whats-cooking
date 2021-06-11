@@ -1,9 +1,7 @@
 package com.example.whatscooking;
 
-import android.app.ActionBar;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,17 +23,12 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
-
-import retrofit2.Retrofit;
 
 public class SearchFrag extends Fragment {
     final static String url = "https://www.themealdb.com/api/json/v1/1/";

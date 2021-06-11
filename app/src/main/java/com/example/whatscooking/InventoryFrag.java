@@ -1,21 +1,16 @@
 package com.example.whatscooking;
 
-import android.content.res.Resources;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -31,19 +26,21 @@ import java.util.ArrayList;
 
 public class InventoryFrag extends Fragment {
 
-    private ArrayList<String> ing_list = new ArrayList<>();
+    private ArrayList<String> ing_list;
     private LinearLayout ingredientList;
     private MaterialButton addIngredientButton;
+    private final String url = "www.themealdb.com/api/json/v1/1/list.php?i=list";
+    public final static int ADD_INGREDIENT_ACTIVITY_CODE = 1;
     private RequestQueue q;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         q = ((MainActivity) getActivity()).q;
+        ing_list = new ArrayList<>();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_inventory, container, false);
     }
 
@@ -60,11 +57,10 @@ public class InventoryFrag extends Fragment {
     private void processResponse(JSONObject res){
         Toast.makeText(getContext(), res.toString(), Toast.LENGTH_LONG).show();
         // TODO: process ingredients for search bar
+
     }
 
     private void addIngredient(View view) {
-        // TODO: Create new activity to search for ingredients
-        String url = "https://foodb.ca/api/v1/foodreport/food";
         JsonObjectRequest r = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -80,5 +76,7 @@ public class InventoryFrag extends Fragment {
                 });
         q.add(r);
         Toast.makeText(getContext(), "Request Success", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getActivity(), AddIngredientActivity.class);
+        startActivityForResult(intent, ADD_INGREDIENT_ACTIVITY_CODE);
     }
 }
