@@ -1,16 +1,21 @@
 package com.example.whatscooking;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -20,6 +25,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.material.button.MaterialButton;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -29,7 +36,7 @@ public class InventoryFrag extends Fragment {
     private ArrayList<String> ing_list;
     private LinearLayout ingredientList;
     private MaterialButton addIngredientButton;
-    private final String url = "www.themealdb.com/api/json/v1/1/list.php?i=list";
+    private final String url = "https://www.themealdb.com/api/json/v1/1/list.php?i=list";
     public final static int ADD_INGREDIENT_ACTIVITY_CODE = 1;
     private RequestQueue q;
     @Override
@@ -55,9 +62,16 @@ public class InventoryFrag extends Fragment {
     }
 
     private void processResponse(JSONObject res){
-        Toast.makeText(getContext(), res.toString(), Toast.LENGTH_LONG).show();
-        // TODO: process ingredients for search bar
-
+        ing_list.clear();
+        try{
+            JSONArray jsa = res.getJSONArray("meals");
+            for(int i=0; i<jsa.length(); ++i){
+                JSONObject jso = jsa.getJSONObject(i);
+                ing_list.add(jso.getString("strIngredient"));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void addIngredient(View view) {
@@ -66,6 +80,7 @@ public class InventoryFrag extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         processResponse(response);
+                        callback();
                     }
                 },
                 new Response.ErrorListener() {
@@ -75,8 +90,11 @@ public class InventoryFrag extends Fragment {
                     }
                 });
         q.add(r);
+    }
+    private void callback(){
         Toast.makeText(getContext(), "Request Success", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getActivity(), AddIngredientActivity.class);
+        intent.putStringArrayListExtra("ingredient_list", this.ing_list);
         startActivityForResult(intent, ADD_INGREDIENT_ACTIVITY_CODE);
     }
 }

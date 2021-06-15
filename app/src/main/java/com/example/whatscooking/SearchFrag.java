@@ -80,7 +80,7 @@ public class SearchFrag extends Fragment {
         ArrayList<String> meal_names = new ArrayList<>();
         searchList.removeAllViews();
         try{
-            JSONArray results = (JSONArray) res.get("meals");
+            JSONArray results = res.getJSONArray("meals");
             for(int i=0; i<results.length(); i++) {
                 JSONObject recipeItem = (JSONObject) results.get(i);
                 meal_names.add(recipeItem.get("strMeal").toString());
