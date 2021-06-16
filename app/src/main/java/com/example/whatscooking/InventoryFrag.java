@@ -61,19 +61,6 @@ public class InventoryFrag extends Fragment {
         addIngredientButton.setOnClickListener(this::addIngredient);
     }
 
-    private void processResponse(JSONObject res){
-        ing_list.clear();
-        try{
-            JSONArray jsa = res.getJSONArray("meals");
-            for(int i=0; i<jsa.length(); ++i){
-                JSONObject jso = jsa.getJSONObject(i);
-                ing_list.add(jso.getString("strIngredient"));
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
     private void addIngredient(View view) {
         JsonObjectRequest r = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
@@ -91,6 +78,20 @@ public class InventoryFrag extends Fragment {
                 });
         q.add(r);
     }
+
+    private void processResponse(JSONObject res){
+        ing_list.clear();
+        try{
+            JSONArray jsa = res.getJSONArray("meals");
+            for(int i=0; i<jsa.length(); ++i){
+                JSONObject jso = jsa.getJSONObject(i);
+                ing_list.add(jso.getString("strIngredient"));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void callback(){
         Toast.makeText(getContext(), "Request Success", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getActivity(), AddIngredientActivity.class);
